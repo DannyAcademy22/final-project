@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quotes Database</title>
+    <link rel="stylesheet" href="{{ url_for("static", filename="style.css") }}">
+</head>
+<body>
+    <div class="container">
+        <h1>(´• ω •`)ﾉ Quotes Database</h1>
+
+        <!-- ramdom quote -->
+        {% if quote %}
+            <div class="quote-box">
+                <p class="quote-text">{{ quote.text }}</p>
+                <p class="quote-author">— {{ quote.author }}</p>
+                <p class="quote-tags"><strong>Tags:</strong> {{ quote.tags }}</p>
+            </div>
+        {% endif %}
+
+        <hr>
+
+        <!-- search -->
+        <h2>🔍 Search for quotes</h2>
+        <form method="get" action="/search">
+            <input type="text" name="author" placeholder="Search by author">
+            <input type="text" name="tag" placeholder="Search by tag">
+            <button type="submit">Search</button>
+        </form>
+
+        <!-- search results -->
+        {% if results %}
+            <h3>Results:</h3>
+            <ul class="results">
+                {% for q in results %}
+                    <li>
+                        “{{ q.text }}” — <strong>{{ q.author }}</strong>
+                        <br><small>Tags: {{ q.tags }}</small>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% elif results is not none %}
+            <p>No results found.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
